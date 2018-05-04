@@ -1,0 +1,41 @@
+name: "branch4"
+input: "data"
+input_dim: 1
+input_dim: 24
+input_dim: 4
+input_dim: 4
+layer {
+  name: "branch4_conv1"
+  type: "Convolution"
+  bottom: "data"
+  top: "branch4_conv1"
+  convolution_param {
+    num_output: 24
+    kernel_size: 2
+    stride: 1
+  }
+}
+
+layer {
+  name: "PReLU4_1"
+  type: "PReLU"
+  bottom: "branch4_conv1"
+  top: "branch4_conv1_prelu"
+}
+layer {
+  name: "branch4_conv2"
+  type: "Convolution"
+  bottom: "branch4_conv1_prelu"
+  top: "branch4_conv2"
+  convolution_param {
+    num_output: 2
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "prob"
+  type: "Softmax"
+  bottom: "branch4_conv2"
+  top: "prob"
+}

@@ -1,0 +1,41 @@
+name: "branch6"
+input: "data"
+input_dim: 1
+input_dim: 24
+input_dim: 4
+input_dim: 4
+layer {
+  name: "branch6_conv1"
+  type: "Convolution"
+  bottom: "data"
+  top: "branch6_conv1"
+  convolution_param {
+    num_output: 24
+    kernel_size: 2
+    stride: 1
+  }
+}
+
+layer {
+  name: "PReLU6_1"
+  type: "PReLU"
+  bottom: "branch6_conv1"
+  top: "branch6_conv1_prelu"
+}
+layer {
+  name: "branch6_conv2"
+  type: "Convolution"
+  bottom: "branch6_conv1_prelu"
+  top: "branch6_conv2"
+  convolution_param {
+    num_output: 2
+    kernel_size: 3
+    stride: 1
+  }
+}
+layer {
+  name: "prob"
+  type: "Softmax"
+  bottom: "branch6_conv2"
+  top: "prob"
+}
